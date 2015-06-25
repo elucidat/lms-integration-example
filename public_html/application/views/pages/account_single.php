@@ -77,9 +77,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php if (!$account['elucidat_public_key']) { ?>
 							&nbsp;
 							<?php } else if ($a['has_elucidat_access']) { ?>
-							<a class="btn btn-default" href="/users/change_elucidat_role/<?php echo $a['account_id']?>/<?php echo $a['id']?>/administrator">Change to Administrator</a>
-							<a class="btn btn-default" href="/users/change_elucidat_role/<?php echo $a['account_id']?>/<?php echo $a['id']?>/editor">Change to Editor</a>
-							<a class="btn btn-danger" href="/users/revoke_elucidat_access/<?php echo $a['account_id']?>/<?php echo $a['id']?>">Revoke Elucidat access</a>
+							<a class="btn btn-default" href="/users/change_elucidat_role/<?php echo $a['account_id']?>/<?php echo $a['id']?>/administrator">Change to Administrator</a><br />
+							<a class="btn btn-default" href="/users/change_elucidat_role/<?php echo $a['account_id']?>/<?php echo $a['id']?>/editor">Change to Editor</a><br />
+							<a class="btn btn-default" href="/users/revoke_elucidat_access/<?php echo $a['account_id']?>/<?php echo $a['id']?>">Revoke Elucidat access</a>
 							<?php } else { ?>
 							<a class="btn btn-default" href="/users/create_elucidat_account/<?php echo $a['account_id']?>/<?php echo $a['id']?>">Create user in Elucidat</a>
 							<?php } ?>
@@ -95,7 +95,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<?php if ($account['elucidat_public_key']) { ?>
 
-				<button class="btn btn-primary">Get Elucidat projects</button>
+				<a href="/projects/index/<?php echo $a['account_id']?>" class="btn btn-primary">Get Elucidat projects</a>
 
 				<?php } else { ?>
 
