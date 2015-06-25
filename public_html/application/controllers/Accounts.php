@@ -125,7 +125,8 @@ class Accounts extends CI_Controller {
 			@ioan - nonce is failing here
 
 			Creating the user does feel a little awkward for me here - I know we chatted about this yesterday - but perhaps we can have another chat through?
-
+			I think this process should just create the account (and I'll talk to Steve about whether it should be a trial or not)
+			Then authors can be added individually later
 
 		*/
 
