@@ -5,6 +5,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="jumbotron">
 			<div class="container">
 				<h1><?php echo $account['company_name'] ?> <small>LMS account</small></h1>
+				<address>
+					<strong>Address:</strong> <?php 
+						$address = array();
+						if ($account['address1']) $address[] = $account['address1'];
+						if ($account['address2']) $address[] = $account['address2'];
+						if ($account['postcode']) $address[] = $account['postcode'];
+						if ($account['country']) $address[] = $account['country'];
+
+					echo implode(', ',$address); ?><br />
+					<strong>Phone:</strong> <?php echo $account['telephone'] ?><br />
+					<strong>Email:</strong> <?php echo $account['company_email'] ?>
+				</address>
 			</div>
 		</div>
 
@@ -18,38 +30,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<button class="btn btn-primary">Get Elucidat account details</button>
 
-				<?php } else if (count($users)) { ?>
+				<?php } else { ?>
 				
 				<form class="form" method="post" action="/accounts/create_elucidat_account/<?php echo $account['id'] ?>">
-					<div class="form-group">
-						<label for="account_owner">Account owner:</label>
-						<select name="account_owner">
-						<?php foreach ($users as $a) { ?>
-							<option value="<?php echo $a['id'] ?>"><?php echo $a['email'] ?></option>
-						<?php } ?>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="subscription_level">Subscription level:</label>
-						<select name="subscription_level">
-							<option value="enterprise">Enterprise</option>
-							<option value="professional">Professional</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="num_authors">Number of authors:</label>
-						<select name="num_authors">
-						<?php for ($i = 1; $i <= 10; $i++) { ?>
-							<option value="<?php echo $i ?>"><?php echo $i ?></option>
-						<?php } ?>
-						</select>
-					</div>
 					<button type="submit" class="btn btn-primary">Create Elucidat account</button>
 				</form>
-
-				<?php } else { ?>
-
-				You must have at least one LMS user to create an Elucidat account.
 
 				<?php } ?>
 
@@ -75,9 +60,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<hr />
 				
+				<?php if (count($users))	 { ?>
 				<h2>LMS Users</h2>
 				<table class="table table-striped">
-					<?php if (count($users))	 { ?>
 					<tr>
 						<?php foreach ($users[0] as $k => $a) { ?>
 						<th><?php echo $k ?></th>
@@ -90,8 +75,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td><?php echo ($k == 'has_elucidat_access' ? ( $v ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' ) : $v) ?></td>
 						<?php } ?>
 					</tr>
-					<?php } ?>
 				</table>
+				<?php } ?>
 			</div>
 
 

@@ -15,6 +15,10 @@ class Accounts extends CI_Controller {
 		// get the account data
 		$this->load->model('account_model');
 		$data['accounts'] = $this->account_model->get_all_accounts();
+		// and get the countries for adding accounts
+		$this->load->model('country_model');
+		$data['countries'] = $this->country_model->get_countries();
+
 		// and load the view
 		$data['page_content'] = $this->load->view('pages/account_all', $data, TRUE);
 		$this->load->view('wrapper', $data);
@@ -33,7 +37,6 @@ class Accounts extends CI_Controller {
 		// insert row
 		$new_id = $this->account_model->add_account( $this->input->post(NULL, TRUE) );
 		// rediret to detail view
-		$this->load->helper('url');
 		redirect('/accounts/view/'.$new_id, 'refresh');
 	}
 
@@ -78,14 +81,6 @@ class Accounts extends CI_Controller {
 		if (empty($data['account']))
 			show_404();
 
-		// now get LMS user that will be the owner
-		$this->load->model('user_model');
-		$data['account_owner'] = $this->user_model->get_single_user( $account_id, $this->input->post('account_owner') );
-
-		if (empty($data['account_owner']))
-			show_404();
-
-		print_r($data);
 		// get config
 		$this->load->config('elucidat');
 		$endpoint = $this->config->item('elucidat_endpoint');
@@ -104,71 +99,66 @@ class Accounts extends CI_Controller {
 		$nonce = $this->elucidat->get_nonce($endpoint.'reseller/create_new_account', $key, $secret);
 		// headers
 		$headers = $this->elucidat->auth_headers($key, $nonce);
-		print_r($headers);
+		//print_r($headers);
 		// create the account
 		$fields = array(
 		    'company_name'=>$data['account']['company_name'],
-		    'first_name'=>$data['account_owner']['first_name'],
-		    'last_name'=>$data['account_owner']['last_name'],
-		    'email'=>$data['account_owner']['email'],
-		    'telephone'=>'1234',
-		    'num_editors'=> $this->input->post('num_authors') ? $this->input->post('num_authors') : 5,
-		    'subscription_level'=> $this->input->post('subscription_level') ? $this->input->post('subscription_level') : 'enterprise',
-		//    'simulation_mode'=>'simulation'
+		    'company_email'=>$data['account']['company_email'],
+		    'first_name'=>$data['account']['first_name'],
+		    'last_name'=>$data['account']['last_name'],
+		    'telephone'=>$data['account']['telephone'],
+		    'address1'=>$data['account']['address1'],
+		    'address2'=>$data['account']['address2'],
+		    'postcode'=>$data['account']['postcode'],
+		    'country'=>$data['account']['country']
 		);
 		$result = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'reseller/create_new_account', $secret);
-		echo ("HTTP status code: " . $result['status'] . "\n");
-		print_r($result['response']);
-
-		/*
-			
-			@ioan - nonce is failing here
-
-			Creating the user does feel a little awkward for me here - I know we chatted about this yesterday - but perhaps we can have another chat through?
-			I think this process should just create the account (and I'll talk to Steve about whether it should be a trial or not)
-			Then authors can be added individually later
-
-		*/
-
-		exit;
+		
+		if (!isset($result['response']['customer_code']))
+			exit("There was a problem creating the account: HTTP status code: " . $result['status'] );
 
 		// save the customer_code to the database
-
-
-
-		// mark the owner account as having Elucidat access (type owner)
-
+		$customer_code = $result['response']['customer_code'];
+		$this->account_model->save_customer_code_to_account( $account_id, $customer_code );
 
 
 		// then create an API key
-		#code as above, then...
+		// then create an API key
+		// then create an API key
+		// then create an API key
 		$nonce = $this->elucidat->get_nonce($endpoint.'reseller/create_new_key', $key, $secret);
 		$headers = $this->elucidat->auth_headers($key, $nonce);
 		$fields = array(
-    		'customer_code'=>$arg1,
-    		'name'=>$arg2
+    		'customer_code'=>$customer_code,
+    		'name'=>'LMS example'
     	);
 		$result = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'reseller/create_new_key', $secret);
-		echo ("HTTP status code: " . $result['status'] . "\n");
-		print_r($result['response']);
+		
+		if (!isset($result['response']['public_key']))
+			exit("There was a problem creating the API key: HTTP status code: " . $result['status'] );
 
 		// save the API key to the account record
-
-
+		$account_api_key = $result['response']['public_key'];
+		$this->account_model->save_public_key_to_account( $account_id, $account_api_key );
 
 		// then subscribe to webhooks
-		$nonce = $this->elucidat->get_nonce($endpoint.'event/subscribe', $key, $secret);
-		$headers = $this->elucidat->auth_headers($key, $nonce);
+		// then subscribe to webhooks
+		// then subscribe to webhooks
+		// then subscribe to webhooks
+		// then subscribe to webhooks
+		$nonce = $this->elucidat->get_nonce($endpoint.'event/subscribe', $account_api_key, $secret);
+		$headers = $this->elucidat->auth_headers($account_api_key, $nonce);
 		$fields = array(
-            'event'=>$arg1,
+            'event'=>'release_course',
             'callback_url'=> base_url('webhook/release')
         );
 		$results = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'event/subscribe', $secret);
-		echo ("HTTP status code: " . $result['status'] . "\n");
-		print_r($result['response']);
+		// echo ("HTTP status code: " . $result['status'] . "\n");
+		// print_r($result['response']);
 
 
 		// redirect to index
+		redirect('/accounts/view/'.$account_id, 'refresh');
 
 	}
 
