@@ -1,0 +1,30 @@
+
+php_value post_max_size 100M
+php_value upload_max_filesize  100M
+
+####################
+# GZIP COMPRESSION #
+####################
+SetOutputFilter DEFLATE
+AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/x-javascript application/x-httpd-php
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip
+Header append Vary User-Agent env=!dont-vary
+
+RewriteEngine On
+
+#Redirect from old domain
+RewriteCond %{HTTP_HOST} ^app\.elucidat\.es [NC]
+RewriteRule ^(.*)$ https://app.elucidat.com/$1 [R=301,NC,L]
+
+#Send all traffic to CI
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+#RewriteRule ^.*$ index.php [NC,L]
+#RewriteRule !\.(webfonts.json|ico|gif|jpg|png|css)$ /index.php [NC,L]
+RewriteRule !^(index\.php|img|robots\.txt|humans|cross|css|fonts|webfonts\.json|responsivesizes\.json) /index.php [NC,L]

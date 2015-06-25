@@ -16,7 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -28,17 +29,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Elucidat LMS example</a>
+					<a class="navbar-brand" href="/">Elucidat LMS example</a>
 				</div>
 			</div>
 		</nav>
 
-		<!-- Main jumbotron for a primary marketing message or call to action -->
-		<div class="jumbotron">
-			<div class="container">
-				<h1>Elucidat LMS integration example</h1>
-			</div>
-		</div>
 
 		<?php echo $page_content ?>
 
