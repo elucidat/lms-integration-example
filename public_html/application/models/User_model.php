@@ -55,5 +55,16 @@ class User_model extends CI_Model
 
     }
 
+    /**
+     * Mark the user as having elucidat access
+     *
+     * @param int
+     * @param int
+     */
+    public function save_has_elucidat_access ( $account_id, $user_id ) {
+        $query = $this->db->query('update user set has_elucidat_access = 1 where id = ? and account_id = ?', array($user_id, $account_id));
+        
+    }
+
 
 }

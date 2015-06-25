@@ -60,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<hr />
 				
-				<?php if (count($users))	 { ?>
+				<?php if (count($users)) { ?>
 				<h2>LMS Users</h2>
 				<table class="table table-striped">
 					<tr>
@@ -68,18 +68,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<th><?php echo $k ?></th>
 						<?php } ?>
 					</tr>
-					<?php } ?>
 					<?php foreach ($users as $a) { ?>
 					<tr>
-						<?php foreach ($a as $k => $v) { ?>
-						<td><?php echo ($k == 'has_elucidat_access' ? ( $v ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>' ) : $v) ?></td>
-						<?php } ?>
+						<?php foreach ($a as $k => $v) { if ($k != 'has_elucidat_access') { ?>
+						<td><?php echo $v ?></td>
+						<?php }} ?>
+						<td>
+							<?php if (!$account['elucidat_public_key']) { ?>
+							&nbsp;
+							<?php } else if ($a['has_elucidat_access']) { ?>
+							<a class="btn btn-default" href="/users/change_elucidat_role/<?php echo $a['account_id']?>/<?php echo $a['id']?>/administrator">Change to Administrator</a>
+							<a class="btn btn-default" href="/users/change_elucidat_role/<?php echo $a['account_id']?>/<?php echo $a['id']?>/editor">Change to Editor</a>
+							<a class="btn btn-danger" href="/users/revoke_elucidat_access/<?php echo $a['account_id']?>/<?php echo $a['id']?>">Revoke Elucidat access</a>
+							<?php } else { ?>
+							<a class="btn btn-default" href="/users/create_elucidat_account/<?php echo $a['account_id']?>/<?php echo $a['id']?>">Create user in Elucidat</a>
+							<?php } ?>
+						</td>
 					</tr>
+					<?php } ?>
 				</table>
 				<?php } ?>
 			</div>
-
-
 
 			<div class="well">
 				<h2>Elucidat Projects</h2>
