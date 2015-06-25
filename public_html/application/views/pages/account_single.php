@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<?php if ($account['elucidat_public_key']) { ?>
 
-				<button class="btn btn-primary">Get Elucidat account details</button>
+				<pre><?php print_r($elucidat_account_data) ?></pre>
 
 				<?php } else { ?>
 				

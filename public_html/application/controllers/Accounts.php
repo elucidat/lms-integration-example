@@ -15,6 +15,7 @@ class Accounts extends CI_Controller {
 		// get the account data
 		$this->load->model('account_model');
 		$data['accounts'] = $this->account_model->get_all_accounts();
+
 		// and get the countries for adding accounts
 		$this->load->model('country_model');
 		$data['countries'] = $this->country_model->get_countries();
@@ -54,6 +55,24 @@ class Accounts extends CI_Controller {
 		
 		if (empty($data['account']))
 			show_404();
+
+		if ($data['account']['elucidat_public_key']) {
+			// IF we have a linked Elucidat account - we'll get the account details for the account
+			// load config
+			$this->load->config('elucidat');
+			$endpoint = $this->config->item('elucidat_endpoint');
+			// using customer's key - NOT the one in the config file
+			$customer_key = $data['account']['elucidat_public_key'];
+			$secret = $this->config->item('elucidat_api_secret');
+			// 
+			$this->load->library('elucidat');
+			// get the nonce
+			$nonce = $this->elucidat->get_nonce( $endpoint.'account', $customer_key, $secret);
+			// and form the request
+			$headers = $this->elucidat->auth_headers($customer_key, $nonce);
+			$data['elucidat_account_data'] = $this->elucidat->call_elucidat($headers, array(), 'GET', $endpoint.'account', $secret);
+			// and give data to the view
+		}
 
 		// now get LMS users
 		$this->load->model('user_model');
