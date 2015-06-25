@@ -10,12 +10,16 @@ It is built in Code Igniter 3, to work on a LAMP stack.
 To get it running, create a database for the project using the db_schema.sql file at the root of the repository.
 Put your database access details into:
 
+```
 application/config/database.php
+```
 (There is an example config files to copy in application/config/examples/database.php)
 
 Next, put your Elucidat API credentials into 
 
+```
 application/config/elucidat.php
+```
 (There is an example config files to copy in application/config/examples/elucidat.php)
 
 PLEASE NOTE: This App is designed for Elucidat Reseller Accounts. Not all of it will work if you do not have an Elucidat Reseller account. Please get in touch with support@elucidat.com if you are not sure.
@@ -29,11 +33,18 @@ Remember that the API will create accounts for you in Elucidat, which will norma
 
 In Code Igniter, the controllers are stored in
 
-application/controllers - you'll be able to see what each action is doing there.
+```
+application/controllers
+```
+ - you'll be able to see what each action is doing there.
 
 We have also included a 'library' class to interact with Elucidat. This is stored in
 
-application/libraries/elucidat.php - you may wish to copy this class into your application
+```
+application/libraries/elucidat.php
+
+```
+ - you may wish to copy this class into your application
 
 
 
