@@ -1,1 +1,3 @@
-# lms-integration-example
+# Elucidat LMS integration example
+
+

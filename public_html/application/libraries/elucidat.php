@@ -32,9 +32,7 @@ class Elucidat
         $auth_headers .= $this->build_base_string($headers, ',');
         //Build the request string
         $fields_string = $this->build_base_string($fields, '&');
-        if(strcasecmp($method, "GET") == 0){
-            $url .= '?'.$fields_string;
-        }
+
         //Set the headers
         $header = array($auth_headers, 'Expect:');
         // Create curl options
@@ -62,6 +60,7 @@ class Elucidat
          //Make the request
         $response = curl_exec($request);
         $status = curl_getinfo($request, CURLINFO_HTTP_CODE);
+
         curl_close($request);
         return array(
             'status' => $status,
@@ -84,7 +83,7 @@ class Elucidat
         unset($auth_headers['oauth_nonce']);
 
         //Make a request to elucidat for a nonce...any url is fine providing it doesnt already have a nonce
-        $json = $this->call_elucidat($auth_headers, array(), 'GET', $api_url . '/account', $consumer_secret);
+        $json = $this->call_elucidat($auth_headers, array(), 'GET', $api_url, $consumer_secret);
 
         if(isset($json['response']['nonce'])){
             return $json['response']['nonce'];
