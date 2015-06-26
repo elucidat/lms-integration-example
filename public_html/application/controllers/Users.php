@@ -211,6 +211,7 @@ class Users extends CI_Controller {
 
 
 		echo "Your login redirect would be '". $signon_end_point . '?' . $request_token."'\n";
+		//redirect('/accounts/view/'.$account_id.'?refresh='.$user['id'], 'refresh');
 
 	}
 }
