@@ -83,7 +83,7 @@ class Releases extends CI_Controller {
 		// construct the query
 		$fields = array(
 			'project_code' => $project_code,
-			'release_mode' => 'scorm' // can be scorm, online-public, online-private, or offline-backup
+			'release_mode' => 'online-public' // can be scorm, online-public, online-private, or offline-backup
 		);
 		$response = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'releases/create', $secret);
 

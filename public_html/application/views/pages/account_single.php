@@ -95,7 +95,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<?php if ($account['elucidat_public_key']) { ?>
 
-				<a href="/projects/index/<?php echo $a['account_id']?>" class="btn btn-primary">Get Elucidat projects</a>
+				<a href="/projects/index/<?php echo $account['id']?>" class="btn btn-primary">Get Elucidat projects</a>
 
 				<?php } else { ?>
 
