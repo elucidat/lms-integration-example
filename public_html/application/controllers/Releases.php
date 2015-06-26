@@ -88,7 +88,7 @@ class Releases extends CI_Controller {
 		$response = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'releases/create', $secret);
 
 		// save the feedback
-		$this->session->set_flashdata('message', 'Release queued (note - it will not show in this list until publishing has completed.');
+		$this->session->set_flashdata('message', 'Release queued (note - it will not show in this list until publishing has completed).');
 		// redirect to detail view
 		redirect('/releases/index/'.$account_id.'/'.$project_code.'?refresh='.$project_code, 'refresh');
 
