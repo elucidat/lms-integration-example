@@ -15,6 +15,8 @@ class Users extends CI_Controller {
 		$this->load->model('user_model');
 		// insert row
 		$new_id = $this->user_model->add_user( $account_id, $this->input->post(NULL, TRUE) );
+		// save the feedback
+		$this->session->set_flashdata('message', 'LMS user created');
 		// rediret to detail view
 		redirect('/accounts/view/'.$account_id, 'refresh');
 
@@ -62,6 +64,8 @@ class Users extends CI_Controller {
 		// mark the author as having access
 		$this->user_model->save_has_elucidat_access ( $account_id, $user_id );
 
+		// save the feedback
+		$this->session->set_flashdata('message', 'Elucidat account created for '.$user['email']);
 		// redirect to detail view
 		redirect('/accounts/view/'.$account_id.'?refresh='.$user['id'], 'refresh');
 
@@ -94,7 +98,7 @@ class Users extends CI_Controller {
 		// 
 		$this->load->library('elucidat');
 		// get the nonce
-		$nonce = $this->elucidat->get_nonce($endpoint.'authors/change_role', $customer_key, $secret);
+		$nonce = $this->elucidat->get_nonce($endpoint.'authors/role', $customer_key, $secret);
 		// and form the request
 		$headers = $this->elucidat->auth_headers($customer_key, $nonce);
 		$fields = array(
@@ -102,7 +106,10 @@ class Users extends CI_Controller {
 		    'role'=>$user['new_role']
 		);
 
-		$result = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'authors/change_role', $secret);
+		$result = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'authors/role', $secret);
+
+		// save the feedback
+		$this->session->set_flashdata('message', 'Elucidat role changed for '.$user['email']);
 
 		// redirect to detail view
 		redirect('/accounts/view/'.$account_id.'?refresh='.$user['id'], 'refresh');
@@ -147,6 +154,9 @@ class Users extends CI_Controller {
 
 		// mark the author as having access
 		$this->user_model->save_has_elucidat_access ( $account_id, $user_id, false );
+
+		// save the feedback
+		$this->session->set_flashdata('message', 'Elucidat access revoked for '.$user['email']);
 
 		// redirect to detail view
 		redirect('/accounts/view/'.$account_id.'?refresh='.$user['id'], 'refresh');

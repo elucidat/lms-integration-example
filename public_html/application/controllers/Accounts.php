@@ -37,6 +37,8 @@ class Accounts extends CI_Controller {
 		$this->load->model('account_model');
 		// insert row
 		$new_id = $this->account_model->add_account( $this->input->post(NULL, TRUE) );
+		// save the feedback
+		$this->session->set_flashdata('message', 'LMS account created');
 		// rediret to detail view
 		redirect('/accounts/view/'.$new_id, 'refresh');
 	}
@@ -175,6 +177,8 @@ class Accounts extends CI_Controller {
 		// echo ("HTTP status code: " . $result['status'] . "\n");
 		// print_r($result['response']);
 
+		// save the feedback
+		$this->session->set_flashdata('message', 'Elucidat account created');
 
 		// redirect to index
 		redirect('/accounts/view/'.$account_id, 'refresh');

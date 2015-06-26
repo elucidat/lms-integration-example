@@ -1,15 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+		<!-- Main jumbotron for a primary marketing message or call to action -->
+		<div class="jumbotron">
+			<div class="container">
+				<h1>Elucidat LMS integration example</h1>
+			</div>
+		</div>
+		
 		<div class="container">
 			<!-- Example row of columns -->
 				
-			<!-- Main jumbotron for a primary marketing message or call to action -->
-			<div class="jumbotron">
-				<div class="container">
-					<h1>Elucidat LMS integration example</h1>
-				</div>
-			</div>
+
+			<?php if (isset($_SESSION['message'])) { ?><div class="alert alert-success" role="alert"><?php echo $_SESSION['message'] ?></div><?php } ?>
 
 			<?php if (count($accounts))	 { ?>
 			<h2>Accounts</h2>

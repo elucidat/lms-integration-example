@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 
 		<div class="container">
-			<!-- Example row of columns -->
+			<?php if (isset($_SESSION['message'])) { ?><div class="alert alert-success" role="alert"><?php echo $_SESSION['message'] ?></div><?php } ?>
 			
 			<div class="well">
 				<h2>Elucidat Account</h2>
