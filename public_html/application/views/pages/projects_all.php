@@ -16,9 +16,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table class="table table-striped">
 				<tr>
 					<th>&nbsp;</th>
-					<?php foreach ($projects[0] as $k => $a) { ?>
+					<?php foreach ($projects[0] as $k => $a) { 
+						if ($k != 'edit_url') { ?>
 					<th><?php echo $k ?></th>
-					<?php } ?>
+					<?php }} ?>
 				</tr>
 				<?php foreach ($projects as $a) { ?>
 				<tr>
@@ -28,12 +29,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							// get a random user
 							$u = $users[array_rand($users)];
 						?>
-						<a class="btn btn-default" href="/projects/edit_deeplink/<?php echo $account['id']?>/<?php echo $u['id']?>?url=<?php echo urlencode('http://'.$a['project_code']) ?>">Editing deeplink<br /><small>as <?php echo $u['email']?></small></a>
+						<a class="btn btn-default" href="/users/single_sign_on/<?php echo $account['id']?>/<?php echo $u['id']?>?url=<?php echo urlencode('http://'.$a['edit_url']) ?>">Editing deeplink<br /><small>as <?php echo $u['email']?></small></a>
 					</td>
 
-					<?php foreach ($a as $k => $v) { ?>
+					<?php foreach ($a as $k => $v) { 
+						if ($k != 'edit_url') { ?>
 					<td><?php echo $v ?></td>
-					<?php } ?>
+					<?php }} ?>
 				</tr>
 				<?php } ?>
 			</table>
