@@ -57,7 +57,7 @@ class Releases extends CI_Controller {
 	 *
 	 * @return void
 	 */
-	public function add ( $account_id, $project_code )
+	public function add ( $account_id, $project_code, $release_code = null )
 	{
 		// add database record, and redirect to view detail page
 		$data = array();
@@ -85,6 +85,10 @@ class Releases extends CI_Controller {
 			'project_code' => $project_code,
 			'release_mode' => 'online-public' // can be scorm, online-public, online-private, or offline-backup
 		);
+		// if this is a re-release - do that instead
+		if ($release_code)
+			$fields['release_code'] = $release_code;
+
 		$response = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'releases/create', $secret);
 
 		// save the feedback
@@ -92,6 +96,15 @@ class Releases extends CI_Controller {
 		// redirect to detail view
 		redirect('/releases/index/'.$account_id.'/'.$project_code.'?refresh='.$project_code, 'refresh');
 
+	}
+	/**
+	 * rereleases a Release
+	 *
+	 * @return void
+	 */
+	public function rerelease ( $account_id, $project_code, $release_code )
+	{
+		$this->add( $account_id, $project_code, $release_code );
 	}
 
 	/**

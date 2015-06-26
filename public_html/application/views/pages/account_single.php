@@ -4,7 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
 			<div class="container">
-				<h1><?php echo $account['company_name'] ?> <small>LMS account</small></h1>
+				<h1><?php echo $account['company_name'] ?> <small>LMS account</small>
+				<form class="form" method="post" action="/webhook/register/<?php echo $account['id'] ?>">
+					<button type="submit" class="btn btn-primary pull-right">Register webhooks</button>
+				</form></h1>
 				<address>
 					<strong>Address:</strong> <?php 
 						$address = array();
@@ -25,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			<div class="well">
 				<h2>Elucidat Account</h2>
+
 
 				<?php if ($account['elucidat_public_key']) { ?>
 
@@ -93,13 +97,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="well">
 				<h2>Elucidat Projects</h2>
 
-				<?php if ($account['elucidat_public_key']) { ?>
+				<?php if ($account['elucidat_public_key'] && count($users)) { ?>
 
 				<a href="/projects/index/<?php echo $account['id']?>" class="btn btn-primary">Get Elucidat projects</a>
 
+				<?php } else if (!count($users)) { ?>
+				Please create some users before listing Projects
+
 				<?php } else { ?>
 
-				You must have a linked Elucidat account to list projects.
+				Please create a linked Elucidat account before listing projects.
 
 				<?php } ?>
 

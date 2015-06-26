@@ -31,7 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$u = $users[array_rand($users)];
 							?>
 						<a class="btn btn-default" href="/releases/launch/<?php echo $account['id']?>/<?php echo $a['release_code']?>/<?php echo $u['id']?>">Launch course<br /><small>as <?php echo $u['email']?></small></a>
-						<?php } ?>
+						<?php } ?><br />
+						<a class="btn btn-default" href="/releases/rerelease/<?php echo $account['id']?>/<?php echo $project_code?>/<?php echo $a['release_code']?>">Re-release</a>
 					</td>
 					
 					<?php foreach ($a as $k => $v) {

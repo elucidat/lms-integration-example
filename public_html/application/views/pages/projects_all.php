@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							// get a random user
 							$u = $users[array_rand($users)];
 						?>
-						<a class="btn btn-default" href="/users/single_sign_on/<?php echo $account['id']?>/<?php echo $u['id']?>?url=<?php echo urlencode('http://'.$a['edit_url']) ?>">Editing deeplink<br /><small>as <?php echo $u['email']?></small></a>
+						<a class="btn btn-default" href="/users/single_sign_on/<?php echo $account['id']?>/<?php echo $u['id']?>?url=<?php echo urlencode($a['edit_url']) ?>">Editing deeplink<br /><small>as <?php echo $u['email']?></small></a>
 					</td>
 
 					<?php foreach ($a as $k => $v) { 
