@@ -7,10 +7,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<h1>Elucidat LMS integration example</h1>
 			</div>
 		</div>
-		
+
 		<div class="container">
-			<!-- Example row of columns -->
-				
+			<!-- Example row of columns -->	
 
 			<?php if (isset($_SESSION['message'])) { ?><div class="alert alert-success" role="alert"><?php echo $_SESSION['message'] ?></div><?php } ?>
 
@@ -22,13 +21,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<th><?php echo $k ?></th>
 					<?php } ?>
 				</tr>
-				<?php } ?>
 				<?php foreach ($accounts as $a) { ?>
 				<tr>
 					<?php foreach ($a as $k => $v) { ?>
 					<td><a href="/accounts/view/<?php echo $a['id']?>"><?php echo $v ?></a></td>
 					<?php } ?>
 				</tr>
+				<?php } ?>
 			</table>
 			<hr />	
 			<?php } ?>
