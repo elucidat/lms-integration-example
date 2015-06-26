@@ -7,18 +7,12 @@ class Webhook extends CI_Controller {
 	 * Default page- redirects to login or shows message
 	 *
 	 * @return void
-	public function add( $account_id )
+	*/
+	public function release()
 	{
-		// add database record, and redirect to view detail page
+		// save the params - or email them or something
 
-		$this->load->model('user_model');
-		// insert row
-		$new_id = $this->user_model->add_user( $account_id, $this->input->post(NULL, TRUE) );
-		// rediret to detail view
-		$this->load->helper('url');
-		redirect('/accounts/view/'.$account_id, 'refresh');
-
+		file_put_contents( BASEPATH .'/../log.txt', json_encode( $_POST ));
 	}
-	 */
 
 }
