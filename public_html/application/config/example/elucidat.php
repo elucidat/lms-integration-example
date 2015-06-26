@@ -6,5 +6,6 @@
 |--------------------------------------------------------------------------
 */
 $config['elucidat_endpoint'] = 'https://api.elucidat.com/v2/';
+$config['elucidat_app_url'] = 'https://app.elucidat.com/';
 $config['elucidat_api_key'] = '';
 $config['elucidat_api_secret'] = '';

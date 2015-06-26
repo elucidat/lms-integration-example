@@ -93,13 +93,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="well">
 				<h2>Elucidat Projects</h2>
 
-				<?php if ($account['elucidat_public_key']) { ?>
+				<?php if ($account['elucidat_public_key'] && count($users)) { ?>
 
-				<a href="/projects/index/<?php echo $a['account_id']?>" class="btn btn-primary">Get Elucidat projects</a>
+				<a href="/projects/index/<?php echo $account['id']?>" class="btn btn-primary">Get Elucidat projects</a>
+
+				<?php } else if (!count($users)) { ?>
+				Please create some users before listing Projects
 
 				<?php } else { ?>
 
-				You must have a linked Elucidat account to list projects.
+				Please create a linked Elucidat account before listing projects.
 
 				<?php } ?>
 
