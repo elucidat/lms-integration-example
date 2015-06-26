@@ -16,9 +16,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table class="table table-striped">
 				<tr>
 					<th>&nbsp;</th>
-					<?php foreach ($releases[0] as $k => $a) { ?>
+					<?php foreach ($releases[0] as $k => $a) { 
+						if ($k != 'launch_url' && $k != 'download_url') {?>
 					<th><?php echo $k ?></th>
-					<?php } ?>
+					<?php }} ?>
 				</tr>
 				<?php foreach ($releases as $a) { ?>
 				<tr>
@@ -33,9 +34,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<?php } ?>
 					</td>
 					
-					<?php foreach ($a as $k => $v) { ?>
+					<?php foreach ($a as $k => $v) {
+						// please note - the release data contains launch_url/download_url - but it is not appropriate for use in this context
+						// (because launch_urls - we want to identify the user, so will append user credentials)
+						// (and for download_url - because the link expires after a few seconds, so will be old before it is clicked
+						if ($k != 'launch_url' && $k != 'download_url') {
+					?>
 					<td><?php echo $v ?></td>
-					<?php } ?>
+					<?php }} ?>
 				</tr>
 				<?php } ?>
 			</table>

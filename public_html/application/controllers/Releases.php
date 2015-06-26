@@ -129,10 +129,8 @@ class Releases extends CI_Controller {
 		);
 		$response = $this->elucidat->call_elucidat($headers, $fields, 'GET', $endpoint.'releases/details', $secret);
 
-		print_r($response);
-
-		// save the feedback
-		//redirect('/releases/index/'.$account_id.'/'.$project_code.'?refresh='.$project_code, 'refresh');
+		// redirect to zip file
+		redirect($response['response']['download_url'], 'refresh');
 
 	}
 
@@ -174,17 +172,12 @@ class Releases extends CI_Controller {
 		$fields = array(
 			'release_code' => $release_code,
 			'name' => implode(' ', array($user['first_name'],$user['first_name'])),
-			'email' => $user['email']
+			'email_address' => $user['email']
 		);
 		$response = $this->elucidat->call_elucidat($headers, $fields, 'GET', $endpoint.'releases/launch', $secret);
 
-		print_r($response);
-
 		// now make launch link to course
-
-
-		// save the feedback
-		//redirect('/releases/index/'.$account_id.'/'.$project_code.'?refresh='.$project_code, 'refresh');
+		redirect($response['response']['url'], 'refresh');
 
 	}
 }
