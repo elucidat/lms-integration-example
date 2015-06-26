@@ -103,7 +103,7 @@ class Users extends CI_Controller {
 		$headers = $this->elucidat->auth_headers($customer_key, $nonce);
 		$fields = array(
 		    'email'=>$user['email'],
-		    'role'=>$user['new_role']
+		    'role'=>$new_role
 		);
 
 		$result = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'authors/role', $secret);
