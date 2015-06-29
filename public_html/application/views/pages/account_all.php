@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 				<div class="form-group">
 					<label for="telephone">Company Telephone</label>
-					<input name="telephone" type="text" class="form-control" id="telephone" placeholder="jane@doe.com">
+					<input name="telephone" type="text" class="form-control" id="telephone" placeholder="1234">
 				</div>
 				<div class="form-group">
 					<label for="first_name">Account Holder First Name</label>

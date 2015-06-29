@@ -74,6 +74,14 @@ class Accounts extends CI_Controller {
 			$headers = $this->elucidat->auth_headers($customer_key, $nonce);
 			$data['elucidat_account_data'] = $this->elucidat->call_elucidat($headers, array(), 'GET', $endpoint.'account', $secret);
 			// and give data to the view
+
+			// and list any event subscriptions
+			// get the nonce
+			$nonce = $this->elucidat->get_nonce( $endpoint.'event', $customer_key, $secret);
+			// and form the request
+			$headers = $this->elucidat->auth_headers($customer_key, $nonce);
+			$data['elucidat_account_events'] = $this->elucidat->call_elucidat($headers, array(), 'GET', $endpoint.'event', $secret);
+			
 		}
 
 		// now get LMS users
@@ -106,6 +114,7 @@ class Accounts extends CI_Controller {
 		$this->load->config('elucidat');
 		$endpoint = $this->config->item('elucidat_endpoint');
 		$key = $this->config->item('elucidat_api_key');
+		$customer_key = $data['account']['elucidat_public_key'];
 		$secret = $this->config->item('elucidat_api_secret');
 
 		$this->load->library('elucidat');
@@ -162,13 +171,13 @@ class Accounts extends CI_Controller {
 		$account_api_key = $result['response']['public_key'];
 		$this->account_model->save_public_key_to_account( $account_id, $account_api_key );
 
+		// then subscribe to webhooks (note use of customer_key instead of account_key - to subscribe the client, not the reseller)
 		// then subscribe to webhooks
 		// then subscribe to webhooks
 		// then subscribe to webhooks
 		// then subscribe to webhooks
-		// then subscribe to webhooks
-		$nonce = $this->elucidat->get_nonce($endpoint.'event/subscribe', $account_api_key, $secret);
-		$headers = $this->elucidat->auth_headers($account_api_key, $nonce);
+		$nonce = $this->elucidat->get_nonce($endpoint.'event/subscribe', $customer_key, $secret);
+		$headers = $this->elucidat->auth_headers($customer_key, $nonce);
 		$fields = array(
             'event'=>'release_course',
             'callback_url'=> base_url('webhook/release')

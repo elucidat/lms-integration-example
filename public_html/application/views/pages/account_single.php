@@ -29,7 +29,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<?php if ($account['elucidat_public_key']) { ?>
 
-				<pre><?php print_r($elucidat_account_data) ?></pre>
+				<pre>Account data: <?php print_r($elucidat_account_data['response']) ?>
+
+<?php if( isset($elucidat_account_events['response'])) { ?>Webhooks: <?php print_r($elucidat_account_events['response']); } ?></pre>
 
 				<?php } else { ?>
 				
