@@ -128,7 +128,6 @@ class Accounts extends CI_Controller {
 		$this->load->config('elucidat');
 		$endpoint = $this->config->item('elucidat_endpoint');
 		$key = $this->config->item('elucidat_api_key');
-		$customer_key = $data['account']['elucidat_public_key'];
 		$secret = $this->config->item('elucidat_api_secret');
 
 		$this->load->library('elucidat');
@@ -165,7 +164,6 @@ class Accounts extends CI_Controller {
 		$customer_code = $result['response']['customer_code'];
 		$this->account_model->save_customer_code_to_account( $account_id, $customer_code );
 
-
 		// then create an API key
 		// then create an API key
 		// then create an API key
@@ -190,15 +188,13 @@ class Accounts extends CI_Controller {
 		// then subscribe to webhooks
 		// then subscribe to webhooks
 		// then subscribe to webhooks
-		$nonce = $this->elucidat->get_nonce($endpoint.'event/subscribe', $customer_key, $secret);
-		$headers = $this->elucidat->auth_headers($customer_key, $nonce);
+		$nonce = $this->elucidat->get_nonce($endpoint.'event/subscribe', $account_api_key, $secret);
+		$headers = $this->elucidat->auth_headers($account_api_key, $nonce);
 		$fields = array(
             'event'=>'release_course',
             'callback_url'=> base_url('webhook/release')
         );
 		$results = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'event/subscribe', $secret);
-		// echo ("HTTP status code: " . $result['status'] . "\n");
-		// print_r($result['response']);
 
 		// save the feedback
 		$this->session->set_flashdata('message', 'Elucidat account created');

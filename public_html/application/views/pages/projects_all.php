@@ -11,8 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="container">
 			<?php if (isset($_SESSION['message'])) { ?><div class="alert alert-success" role="alert"><?php echo $_SESSION['message'] ?></div><?php } ?>
 
-			<?php if (count($projects))	 { ?>
 			<h2>Projects</h2>
+			<?php if (count($projects))	 { ?>
 			<table class="table table-striped">
 				<tr>
 					<th>&nbsp;</th>
@@ -39,8 +39,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</tr>
 				<?php } ?>
 			</table>
-			<?php } ?>
+			<?php } else { ?>
 
+			<p>You don't have any projects yet - perhaps you should log in and create one?</p>
+			<?php 
+				// get a random user
+				$u = $users[array_rand($users)];
+			?>
+			<p><a class="btn btn-primary" href="/users/single_sign_on/<?php echo $account['id']?>/<?php echo $u['id']?>?url=<?php echo urlencode($add_project_link) ?>">Add Project deeplink<br /><small>as <?php echo $u['email']?></small></a></p>
+
+			<?php } ?>
 
 			<p>&nbsp;</p>
 		</div> <!-- /container -->

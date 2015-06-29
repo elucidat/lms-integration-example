@@ -41,6 +41,7 @@ class Projects extends CI_Controller {
 		$response = $this->elucidat->call_elucidat($headers, $fields, 'GET', $endpoint.'projects', $secret);
 
 		$data['projects'] = $response['response'];
+		$data['add_project_link'] = $this->config->item('elucidat_author_app_url');
 
 		// and load the view
 		$data['page_content'] = $this->load->view('pages/projects_all', $data, TRUE);
