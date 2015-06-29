@@ -81,7 +81,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			<hr />	
 			<h2>Webhooks</h2>
-			<a href="webhook/subscribe_to_new_trials" class="btn btn-primary">Subscribe to new trials webhook</a>
-
+			<?php if(isset($events['response']) && !empty($events['response'])) { ?>
+			<pre><?php print_r($events['response']); ?></pre>
+			<?php } else {?>
+			<a href="/webhook/subscribe_to_new_trials" class="btn btn-primary">Subscribe to new trials webhook</a>
+			<?php } ?>
 			<p>&nbsp;</p>
 		</div> <!-- /container -->

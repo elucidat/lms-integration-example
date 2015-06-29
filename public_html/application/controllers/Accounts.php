@@ -20,6 +20,20 @@ class Accounts extends CI_Controller {
 		$this->load->model('country_model');
 		$data['countries'] = $this->country_model->get_countries();
 
+		// and find any reseller webhooks
+		$this->load->config('elucidat');
+		$endpoint = $this->config->item('elucidat_endpoint');
+		$key = $this->config->item('elucidat_api_key');
+		$secret = $this->config->item('elucidat_api_secret');
+		// 
+		$this->load->library('elucidat');
+		// and list any event subscriptions
+		// get the nonce
+		$nonce = $this->elucidat->get_nonce( $endpoint.'event', $key, $secret);
+		// and form the request
+		$headers = $this->elucidat->auth_headers($key, $nonce);
+		$data['events'] = $this->elucidat->call_elucidat($headers, array(), 'GET', $endpoint.'event', $secret);
+			
 		// and load the view
 		$data['page_content'] = $this->load->view('pages/account_all', $data, TRUE);
 		$this->load->view('wrapper', $data);
