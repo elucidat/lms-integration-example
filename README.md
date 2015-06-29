@@ -54,3 +54,7 @@ application/libraries/elucidat.php
 ## Questions?
 
 Don't hesitate - hit us up: support@elucidat.com
+
+
+
+Copyright Elucidat Ltd 2015
