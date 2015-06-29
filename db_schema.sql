@@ -1,7 +1,7 @@
 #
 # SQL Export
 # Created by Querious (980)
-# Created: 25 June 2015 15:52:45 BST
+# Created: 29 June 2015 16:48:02 BST
 # Encoding: Unicode (UTF-8)
 #
 
@@ -25,7 +25,7 @@ CREATE TABLE `account` (
   `elucidat_customer_code` varchar(128) DEFAULT NULL,
   `elucidat_public_key` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `country` (
@@ -48,21 +48,13 @@ CREATE TABLE `user` (
   `has_elucidat_access` tinyint(2) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `account_id` (`account_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 
 
 
 SET @PREVIOUS_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS;
 SET FOREIGN_KEY_CHECKS = 0;
-
-
-LOCK TABLES `account` WRITE;
-ALTER TABLE `account` DISABLE KEYS;
-INSERT INTO `account` (`id`, `company_name`, `company_email`, `first_name`, `last_name`, `telephone`, `address1`, `address2`, `postcode`, `country`, `elucidat_customer_code`, `elucidat_public_key`) VALUES 
-	(3,'Test co','ian+company@ianbudden.com','Ian','Budden','1234','Address 1','Address 2','SW1','GB','558c13bacc83f','8DA7F967-C646-FC92-6ED5-E7B9366545A4');
-ALTER TABLE `account` ENABLE KEYS;
-UNLOCK TABLES;
 
 
 LOCK TABLES `country` WRITE;
@@ -320,14 +312,6 @@ INSERT INTO `country` (`id`, `countryCode`, `countryName`, `prioritise`) VALUES
 	(250,'ZW','Zimbabwe',0);
 ALTER TABLE `country` ENABLE KEYS;
 UNLOCK TABLES;
-
-
-LOCK TABLES `user` WRITE;
-ALTER TABLE `user` DISABLE KEYS;
-ALTER TABLE `user` ENABLE KEYS;
-UNLOCK TABLES;
-
-
 
 
 SET FOREIGN_KEY_CHECKS = @PREVIOUS_FOREIGN_KEY_CHECKS;
