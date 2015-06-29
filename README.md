@@ -2,7 +2,7 @@
 
 This App is intended to demonstrate how the Elucidat API would work from an LMS's point of view.
 
-It is built in Code Igniter 3, to work on a LAMP stack.
+It is built in CodeIgniter 3, to work on a LAMP stack.
 
 
 ## Installation
@@ -34,7 +34,7 @@ Remember that the API will create accounts for you in Elucidat, which will norma
 
 ## Where the files are
 
-In Code Igniter, the controllers are stored in
+In CodeIgniter, the controllers are stored in
 
 ```
 application/controllers

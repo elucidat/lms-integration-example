@@ -6,43 +6,37 @@ class Webhook extends CI_Controller {
 
 
 	/**
-	 * Register webhooks
+	 * Register for subscription creation notifications
 	 *
 	 * @return void
 	*/
-	public function register($account_id)
+	public function subscribe_to_new_trials ()
 	{
 
 		$data = array();
-		// get the account data
-		$this->load->model('account_model');
-		$data['account'] = $this->account_model->get_single_account( $account_id );
-		
-		if (empty($data['account']))
-			show_404();
 
 		// get config
 		$this->load->config('elucidat');
 		$endpoint = $this->config->item('elucidat_endpoint');
+		$key = $this->config->item('elucidat_api_key');
 		$secret = $this->config->item('elucidat_api_secret');
-		$webhooks = $this->config->item('webhooks');
 		$this->load->library('elucidat');
 
-		// Register each webhook in the config
-		foreach($webhooks as $event => $callback){
-			$customer_key = $data['account']['elucidat_public_key'];
-			// get the nonce
-			$nonce = $this->elucidat->get_nonce($endpoint.'reseller/create_new_account', $customer_key, $secret);
-			// headers
-			$headers = $this->elucidat->auth_headers($customer_key, $nonce);
-			// create the event subscription
-		    $fields = array(
-		        'event'=>$event,
-		        'callback_url'=>$callback,
-		    );
-			$result = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'event/subscribe', $secret);
-		}
-		redirect('/accounts/view/'.$account_id, 'refresh');
+		// get the nonce
+		$nonce = $this->elucidat->get_nonce($endpoint.'event/subscribe', $key, $secret);
+		// headers
+		$headers = $this->elucidat->auth_headers($key, $nonce);
+		// create the event subscription
+		$fields = array(
+	        'event'=>'reseller_trial_signup',
+	        'callback_url'=>base_url('webhook/reseller_trial_signup'),
+		);
+		$result = $this->elucidat->call_elucidat($headers, $fields, 'POST', $endpoint.'event/subscribe', $secret);
+	
+		// save the feedback
+		$this->session->set_flashdata('message', 'Subscribed to trial sign-up notifications.');
+		// back to home
+		redirect('/', 'refresh');
 	}
 
 	/**
@@ -52,8 +46,17 @@ class Webhook extends CI_Controller {
 	*/
 	public function release()
 	{
-		// save the params - or email them or something
+		// save the params
 		file_put_contents( BASEPATH .'../../release_log.txt', $_POST );
+
+		/*
+			Example workflow - 
+				- on release - 
+				- download zip file
+				- add into LMS
+				- notify subscribers
+		*/
+
 	}
 	/**
 	 * catches new reseller signups from elucidat
@@ -62,8 +65,17 @@ class Webhook extends CI_Controller {
 	*/
 	public function reseller_trial_signup()
 	{
-		// save the params - or email them or something
+		// save the params
 		file_put_contents( BASEPATH .'../../trial_signups_log.txt', $_POST );
+
+		/*
+			Example workflow - 
+				- on trial sign-up - 
+				- add API key
+				- subscribe to release events
+				- create linked account in LMS
+				- add to sales CRM system and send welcome email
+		*/
 	}
 
 }

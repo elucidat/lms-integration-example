@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php foreach ($projects as $a) { ?>
 				<tr>
 					<td>
-						<a class="btn btn-default" href="/releases/index/<?php echo $account['id']?>/<?php echo $a['project_code']?>">View releases</a><br />
+						<a class="btn btn-primary" href="/releases/index/<?php echo $account['id']?>/<?php echo $a['project_code']?>">View releases</a><br />
 						<?php 
 							// get a random user
 							$u = $users[array_rand($users)];
@@ -42,4 +42,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<?php } ?>
 
 
+			<p>&nbsp;</p>
 		</div> <!-- /container -->

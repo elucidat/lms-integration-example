@@ -1,5 +1,6 @@
 
-public_html/application/config/elucidat.php
-public_html/application/config/database.php
 
+public_html/application/config/database.php
 public_html/application/config/elucidat.php
+release_log.txt
+trial_signups_log.txt

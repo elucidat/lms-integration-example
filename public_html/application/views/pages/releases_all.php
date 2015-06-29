@@ -25,12 +25,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<tr>
 					<td>
 						<?php if ($a['release_mode'] == 'scorm' || $a['release_mode'] == 'offline-backup') { ?>
-						<a class="btn btn-default" href="/releases/download/<?php echo $account['id']?>/<?php echo $a['release_code']?>">Download SCORM file</a>
+						<a class="btn btn-primary" href="/releases/download/<?php echo $account['id']?>/<?php echo $a['release_code']?>">Download SCORM file</a>
 						<?php } else if ($a['release_mode'] == 'online-public') { 
 							// get a random user
 							$u = $users[array_rand($users)];
 							?>
-						<a class="btn btn-default" href="/releases/launch/<?php echo $account['id']?>/<?php echo $a['release_code']?>/<?php echo $u['id']?>">Launch course<br /><small>as <?php echo $u['email']?></small></a>
+						<a class="btn btn-primary" href="/releases/launch/<?php echo $account['id']?>/<?php echo $a['release_code']?>/<?php echo $u['id']?>">Launch course<br /><small>as <?php echo $u['email']?></small></a>
 						<?php } ?><br />
 						<a class="btn btn-default" href="/releases/rerelease/<?php echo $account['id']?>/<?php echo $project_code?>/<?php echo $a['release_code']?>">Re-release</a>
 					</td>
@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<?php } ?>
 
 			<h2>Add a Release</h2>
-			<a class="btn btn-default" href="/releases/add/<?php echo $account['id']?>/<?php echo $project_code?>">Create a release</a>
+			<a class="btn btn-primary" href="/releases/add/<?php echo $account['id']?>/<?php echo $project_code?>">Create a release</a>
 
+			<p>&nbsp;</p>
 		</div> <!-- /container -->

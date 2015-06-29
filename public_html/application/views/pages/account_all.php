@@ -9,8 +9,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 
 		<div class="container">
-			<!-- Example row of columns -->	
-
 			<?php if (isset($_SESSION['message'])) { ?><div class="alert alert-success" role="alert"><?php echo $_SESSION['message'] ?></div><?php } ?>
 
 			<?php if (count($accounts))	 { ?>
@@ -78,8 +76,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 				</div>
 
-				<button type="submit" class="btn btn-default">Add Account</button>
+				<button type="submit" class="btn btn-primary">Add Account</button>
 			</form>
 
+			<hr />	
+			<h2>Webhooks</h2>
+			<a href="webhook/subscribe_to_new_trials" class="btn btn-primary">Subscribe to new trials webhook</a>
 
+			<p>&nbsp;</p>
 		</div> <!-- /container -->

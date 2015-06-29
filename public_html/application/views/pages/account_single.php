@@ -4,10 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
 			<div class="container">
-				<h1><?php echo $account['company_name'] ?> <small>LMS account</small>
-				<form class="form" method="post" action="/webhook/register/<?php echo $account['id'] ?>">
-					<button type="submit" class="btn btn-primary pull-right">Register webhooks</button>
-				</form></h1>
+				<h1><?php echo $account['company_name'] ?> <small>LMS account</small></h1>
 				<address>
 					<strong>Address:</strong> <?php 
 						$address = array();
@@ -59,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<label for="email">Email:</label>
 						<input name="email" type="text" class="form-control" id="email" placeholder="jane@doe.com">
 					</div>
-					<button type="submit" class="btn btn-default">Add User</button>
+					<button type="submit" class="btn btn-primary">Add User</button>
 				</form>
 
 				<hr />
@@ -85,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a class="btn btn-default" href="/users/change_elucidat_role/<?php echo $a['account_id']?>/<?php echo $a['id']?>/editor">Change to Editor</a><br />
 							<a class="btn btn-default" href="/users/revoke_elucidat_access/<?php echo $a['account_id']?>/<?php echo $a['id']?>">Revoke Elucidat access</a>
 							<?php } else { ?>
-							<a class="btn btn-default" href="/users/create_elucidat_account/<?php echo $a['account_id']?>/<?php echo $a['id']?>">Create user in Elucidat</a>
+							<a class="btn btn-primary" href="/users/create_elucidat_account/<?php echo $a['account_id']?>/<?php echo $a['id']?>">Create user in Elucidat</a>
 							<?php } ?>
 						</td>
 					</tr>
@@ -111,5 +108,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php } ?>
 
 			</div>
+			<p>&nbsp;</p>
 
 		</div> <!-- /container -->
